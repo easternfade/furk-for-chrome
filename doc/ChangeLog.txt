@@ -1,0 +1,59 @@
+===========================================================
+1.5.0
+* Improved API error handling
+* Migrated from deprecated webkitNotifications to chrome.notifications API (https://developer.chrome.com/extensions/desktop_notifications.html) and improved readability 
+of notification message for legacy and new Chrome notifications
+* URL changes
+	- fixed bt-chat
+	- added mvgroup
+* Fixed bug causing context menu to be added multiple times
+* Added ability to download file directly from notification bubble
+
+TODO: ---
+* Handle magnet links
+* Update jQuery version
+* Removed jQuery dependency - now using underscore for common library functions
+* Fixed auto-load of Furk API key in Options (Code by PAEz: https://github.com/PAEz)
+* Migrated from localStorage API to chrome.storage API (https://developer.chrome.com/extensions/storage.html)
+	- Saved API key now synced to all your Chrome browsers
+
+===========================================================
+1.4
+* Reorganised source code
+* Added packaging script
+* Started work on base32 hash decoding (WIP)
+* Added links to last 10 finished files to browser action panel (WIP)
+* Updated manifest.json
+* Fixed bug which did not allow use of extension without API key (GitHub Issue: https://github.com/originalmind/FurkForChrome/issues/1)
+* updated jquery to 2.0.1 (including dev/*.vsdoc)
+
+===========================================================
+1.3
+* Options auto-save
+* Compatitibility with new Chrome manifest (v2)
+* Support for more sites
+* Support for magnet URIs
+
+===========================================================
+1.2b: 
+* Added options. Can specify Furk API key.
+* Removed panel temporarily
+* Refactored furkAPI.js
+
+===========================================================
+1.1.1b: 21-dec-2011
+* Bug fixes
+
+===========================================================
+1.1b: 21-dec-2011
+* Update to jQuery 1.7.1
+* Handle 500 errors from API
+* Added panel
+* Javascript clean ups
+
+===========================================================
+1.0b: 17-dec-2011
+* Queue from link context menu - supports torrent file path or info hash
+
+===========================================================
+THE BEGINNING

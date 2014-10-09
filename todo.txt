@@ -1,0 +1,8 @@
+1. Move to a different github account
+   - keep trunk working
+   - make feature or release branches
+   - write tests
+   - tell Furk guy it's moved
+2. Handle magnet links
+3. Handle highlighted info hashes
+4. Handle 32 byte hash

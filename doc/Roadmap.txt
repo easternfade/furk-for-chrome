@@ -1,0 +1,12 @@
+Furk for Chrome Roadmap
+----------------------------
+
+1.5
+* Handle magnet URLs
+* Auto-load Furk API key
+* Panel - to show finished and active lists
+* Download directly from notification popup
+
+1.6+:
+* Detect base32 torrent hashes
+* For sites that embed torrent URL's in HTML pages, parse the page and extract the proper torrent URL; similarly handle re.zoink.it
