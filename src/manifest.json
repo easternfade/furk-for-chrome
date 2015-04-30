@@ -12,6 +12,7 @@
     "contextMenus",
     "notifications",
     "tabs",
+    "tts",
     "webRequest",
     "webNavigation",
     "downloads",

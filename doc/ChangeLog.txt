@@ -1,17 +1,18 @@
 ===========================================================
 1.5.0
-* Improved API error handling
-* Migrated from deprecated webkitNotifications to chrome.notifications API (https://developer.chrome.com/extensions/desktop_notifications.html) and improved readability 
-of notification message for legacy and new Chrome notifications
+* [dev] Improved API error handling
+* [dev] Migrated from deprecated webkitNotifications to chrome.notifications API (https://developer.chrome.com/extensions/desktop_notifications.html) and
+* Improved readability of notification message for legacy and new Chrome notifications
 * URL changes
 	- fixed bt-chat
 	- added mvgroup
 * Fixed bug causing context menu to be added multiple times
-* Added ability to download file directly from notification bubble
+* Added ability to download file directly from notification
+* [dev] Split notification code into separate module
+* [fun] Added synthesized speech to Download action
 
 TODO: ---
 * Handle magnet links
-* Update jQuery version
 * Removed jQuery dependency - now using underscore for common library functions
 * Fixed auto-load of Furk API key in Options (Code by PAEz: https://github.com/PAEz)
 * Migrated from localStorage API to chrome.storage API (https://developer.chrome.com/extensions/storage.html)

@@ -79,15 +79,15 @@ var FurkAPI = (function () {
             //return req;
         },
         addToFurk: function (link, onLoadCallBack) {
-            var req = new XMLHttpRequest();
-
             var apiCall = apiUrl("dl/add");
 
+            // Do nothing if both required values are undefined
+            if (link.hash === undefined && link.url === undefined) return null;
+
+            // todo: clean this up
             if (link.hash === undefined) {
-                //apiCall += "url=" + link.url;
                 apiCall = appendApiParam(apiCall, "url", link.url);
             } else {
-//                apiCall += "info_hash=" + link.hash;
                 apiCall = appendApiParam(apiCall, "info_hash", link.hash);
             }
 
@@ -96,13 +96,6 @@ var FurkAPI = (function () {
                                     true,
                                     onLoadCallBack);
 
-            //req.open(
-            //    "GET",
-            //    apiCall,
-            //    true);
-
-            //req.onload = onLoadCallBack;
-            //req.send(null);
         },
         getFinished: function (ids, hash, onLoadCallBack, limit, sort_col, sort_direction) {
 

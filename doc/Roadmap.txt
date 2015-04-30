@@ -3,10 +3,15 @@ Furk for Chrome Roadmap
 
 1.5
 * Handle magnet URLs
+magnet:?xt=urn:btih:TFRKE3Z4YUSKN3UMUNEMIDWFHXFW53JW&dn=Two.and.a.Half.Men.S12E15E16.HDTV.x264-LOL&tr=udp://open.demonii.com:80&tr=udp://tracker.coppersurfer.tk:80&tr=udp://tracker.leechers-paradise.org:6969&tr=udp://exodus.desync.com:6969
 * Auto-load Furk API key
 * Panel - to show finished and active lists
-* Download directly from notification popup
 
 1.6+:
+* Option to auto-download finished files
+* UI cleanup - make use of a framework, e.g. React
+* Load modules using require() and remove the need for background page
+* Further notification improvements
 * Detect base32 torrent hashes
-* For sites that embed torrent URL's in HTML pages, parse the page and extract the proper torrent URL; similarly handle re.zoink.it
+* For sites that embed torrent URLs in HTML pages, parse the page and extract the proper torrent URL; similarly handle re.zoink.it
+	+ Might implement this as a page action
