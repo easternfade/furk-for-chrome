@@ -1,12 +1,30 @@
-﻿// Requires jQuery to be included
+﻿//'use strict';
+
 var FurkForChromeOptions = (function () {
+
+    this.extractApiKey = function(textBoxTarget) {
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", FurkAPI.FurkApiPage(), true);
+        xhr.onreadystatechange = function() {
+          if (xhr.readyState == 4) {
+            if (xhr.responseText !== "") {
+                var re = /<li>api_key.+?Your API key is:.*?([0-9a-f]+).*?<\/li>/gm;
+                var matches = re.exec(xhr.responseText);
+                if (matches) {
+                    textBoxTarget.innerText = matches[1];
+                }
+            }
+          }
+        };
+        xhr.send();
+    };
 
     /// Public methods
     return {
         // Restores select box state to saved value from localStorage.
         restoreOptions: function () {
             chrome.storage.sync.get('furkForChrome_apiKey', function(items) {
-                var textBox = document.getElementById("furkForChrome_apiKey");
+                var textBox = document.getElementById('furkForChrome_apiKey');
                 if (textBox && items['furkForChrome_apiKey']) {
                     textBox.value = items['furkForChrome_apiKey'];
                 }
@@ -22,7 +40,13 @@ var FurkForChromeOptions = (function () {
         },
         // Attempts to scrape the API key from Furk
         findApiKey: function () {
-            $("#furkForChrome_apiKey").load(FurkAPI.FurkApiPage + " li:contains('Your API key is:')");
+
+            var textBox = document.getElementById('furkForChrome_apiKey');
+
+            if (textBox) {
+                extractApiKey(textBox);
+            }
+            
         },
         init: function () {
             // Load options from local storage
@@ -30,8 +54,30 @@ var FurkForChromeOptions = (function () {
 
             // Bind options page event handlers
 
-            // 1. Save options on close tab
-            chrome.tabs.onRemoved.addListener(FurkForChromeOptions.saveOptions);
+            // 1. Save  then close tab on button click
+            var closeButton = document.getElementById("btn_close");
+            if (closeButton) {
+                closeButton.onclick = function() { 
+                    chrome.tabs.getCurrent(function(tab) {
+                        FurkForChromeOptions.saveOptions();
+                        chrome.tabs.remove(tab.id);
+                    });
+                    return false;
+                }
+            }
+
+
+            // 2. Autoload API key
+            var findApiLink = document.getElementById("a_findApiKey");
+            if (findApiLink) {
+                findApiLink.onclick = FurkForChromeOptions.findApiKey;
+            }
+
+            // 3. Manual save button
+            var saveButton = document.getElementById("btn_save");
+            if (saveButton) {
+                saveButton.onclick = FurkForChromeOptions.saveOptions;
+            }            
         }
     };
 }());

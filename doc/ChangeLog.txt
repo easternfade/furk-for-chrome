@@ -10,13 +10,15 @@
 * Added ability to download file directly from notification
 * [dev] Split notification code into separate module
 * [fun] Added synthesized speech to Download action
+* Fixed storage of Furk API key
+* [dev] Migrated from localStorage API to chrome.storage API (https://developer.chrome.com/extensions/storage.html)
+   - Saved API key now synced to all your Chrome browsers
 
-TODO: ---
+TODO:
+-----
 * Handle magnet links
-* Removed jQuery dependency - now using underscore for common library functions
+* [dev] Removed jQuery dependency - now using underscore for common library functions
 * Fixed auto-load of Furk API key in Options (Code by PAEz: https://github.com/PAEz)
-* Migrated from localStorage API to chrome.storage API (https://developer.chrome.com/extensions/storage.html)
-	- Saved API key now synced to all your Chrome browsers
 
 ===========================================================
 1.4
