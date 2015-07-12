@@ -8,9 +8,11 @@ magnet:?xt=urn:btih:TFRKE3Z4YUSKN3UMUNEMIDWFHXFW53JW&dn=Two.and.a.Half.Men.S12E1
 * Panel - to show finished and active lists
 
 1.6+:
+* Use webRequest API to intercept torrent file requests
 * Option to auto-download finished files
 * UI cleanup - make use of a framework, e.g. React
-* Load modules using require() and remove the need for background page
+* [dev] Load modules using require() and remove the need for background page references
+* [dev] explore event pages
 * Further notification improvements
 * Detect base32 torrent hashes
 * For sites that embed torrent URLs in HTML pages, parse the page and extract the proper torrent URL; similarly handle re.zoink.it
