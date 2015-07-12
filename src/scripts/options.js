@@ -70,7 +70,7 @@ var FurkForChromeOptions = (function () {
             // 2. Autoload API key
             var findApiLink = document.getElementById("a_findApiKey");
             if (findApiLink) {
-                findApiLink.onclick = FurkForChromeOptions.findApiKey;
+                findApiLink.onclick = function() { alert('Sorry, work in progress!'); }; // FurkForChromeOptions.findApiKey;
             }
 
             // 3. Manual save button
