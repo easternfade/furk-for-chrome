@@ -55,4 +55,4 @@ SUPPORT / FEATURE REQUESTS
 DEV NOTES
 ------------
 
-This project was first committed on Dec 18, 2011. When I moved the repo to this GitHub account I chose to start a fresh git history, since v1.5.0 is a major rewrite.
+This project was first committed on Dec 18, 2011 in another GitHub accounrt. When I moved the repo to this GitHub account I chose to start a fresh git history, since v1.5.0 is a major rewrite.
