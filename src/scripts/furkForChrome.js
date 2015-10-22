@@ -139,13 +139,19 @@ var FurkForChrome = (function() {
         createContextMenu: function() {
             var title = "Add to Furk";
 
+            chrome.contextMenus.onClicked.addListener(function(info, tab) {
+                switch (info.menuItemId) {
+                    case "ffc_context_main":
+                        FurkAPI.addToFurk(FurkForChrome.parseUrl(info), FurkForChrome.furkAPIResponse);
+                        break;    
+                }
+            });
+                
             chrome.contextMenus.create({
+                id: "ffc_context_main",
                 title: title,
                 contexts: ['link'],
-                targetUrlPatterns: this.torrentSites(),
-                onclick: function(info, tab) {
-                    var req = FurkAPI.addToFurk(FurkForChrome.parseUrl(info), FurkForChrome.furkAPIResponse);
-                }
+                targetUrlPatterns: this.torrentSites()
             });
         },
         attachDownloadHandler: function() {

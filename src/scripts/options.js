@@ -38,7 +38,8 @@ var FurkForChromeOptions = (function () {
             var apiKey = document.getElementById("furkForChrome_apiKey").value;
             
             if (apiKey) {
-                //chrome.storage.sync.set({ FurkForChromeStorage.storageKeys['API_KEY']: apiKey }, function() {});
+                var keyName = FurkForChromeStorage.storageKeys.API_KEY;
+                chrome.storage.sync.set({ keyName: apiKey }, function() {});
             }
         },
         // Attempts to scrape the API key from Furk
