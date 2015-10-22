@@ -13,7 +13,6 @@
     "notifications",
     "tabs",
     "tts",
-    "webRequest",
     "webNavigation",
     "downloads",
     "storage",
@@ -23,7 +22,8 @@
     "https://*/*"
   ],
   "background": {
-    "page": "background.html"
+    "page": "background.html",
+    "persistent": false
   },
   "options_page": "options.html",
   "browser_action": {

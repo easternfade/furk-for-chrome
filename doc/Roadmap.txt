@@ -5,10 +5,9 @@ Furk for Chrome Roadmap
 * Handle magnet URLs
 magnet:?xt=urn:btih:TFRKE3Z4YUSKN3UMUNEMIDWFHXFW53JW&dn=Two.and.a.Half.Men.S12E15E16.HDTV.x264-LOL&tr=udp://open.demonii.com:80&tr=udp://tracker.coppersurfer.tk:80&tr=udp://tracker.leechers-paradise.org:6969&tr=udp://exodus.desync.com:6969
 * Auto-load Furk API key
-* Panel - to show finished and active lists
 
 1.6+:
-* Use webRequest API to intercept torrent file requests
+* Intercept torrent file downloads and send them to Furk
 * Option to auto-download finished files
 * UI cleanup - make use of a framework, e.g. React
 * [dev] Load modules using require() and remove the need for background page references
