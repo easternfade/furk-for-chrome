@@ -83,11 +83,13 @@ var FurkAPI = (function () {
             // Do nothing if both required values are undefined
             if (link.hash === undefined && link.url === undefined) return null;
             
-            var apiKey = FurkForChromeStorage.Get("API_KEY", function(result, key) {
+            FurkForChromeStorage.Get("API_KEY", function(result, key) {
 
                 var apiCall = apiUrl("dl/add", key !== undefined);
                 
-                apiCall = appendApiParam(apiCall, "api_key", key);
+                if (key !== undefined) {
+                    apiCall = appendApiParam(apiCall, "api_key", key);
+                }
 
                 // todo: clean this up
                 if (link.hash === undefined) {
