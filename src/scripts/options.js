@@ -23,10 +23,13 @@ var FurkForChromeOptions = (function () {
     return {
         // Restores select box state to saved value from localStorage.
         restoreOptions: function () {
-            chrome.storage.sync.get('furkForChrome_apiKey', function(items) {
-                var textBox = document.getElementById('furkForChrome_apiKey');
-                if (textBox && items['furkForChrome_apiKey']) {
-                    textBox.value = items['furkForChrome_apiKey'];
+            //chrome.storage.sync.get(FurkForChromeStorage.storageKeys.API_KEY, function(items) {
+            FurkForChromeStorage.Get('API_KEY', function(result, item) {
+                if (result.status === 'OK') {
+                    var textBox = document.getElementById("furkForChrome_apiKey");
+                    if (textBox) { // && items[FurkForChromeStorage.storageKeys.API_KEY]) {
+                        textBox.value = item;
+                    }
                 }
             });
         },
@@ -35,7 +38,7 @@ var FurkForChromeOptions = (function () {
             var apiKey = document.getElementById("furkForChrome_apiKey").value;
             
             if (apiKey) {
-                chrome.storage.sync.set({ 'furkForChrome_apiKey': apiKey }, function() {});
+                //chrome.storage.sync.set({ FurkForChromeStorage.storageKeys['API_KEY']: apiKey }, function() {});
             }
         },
         // Attempts to scrape the API key from Furk
