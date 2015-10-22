@@ -1,14 +1,6 @@
-﻿/// <reference path="dev/chrome-api-vsdoc.js"/>
-/// <reference path="dev/jquery-2.0.1-vsdoc.js"/>
-/*
+﻿/*
 * Browser action panel
 */
-
-//$("#spinner").show();
-
-//var req = FurkAPI.searchFurk("the office", true, showSearchResults);
-//req.onload = showSearchResults;
-//req.send(null);
 
 var FurkForChromePanel = (function () {
 
