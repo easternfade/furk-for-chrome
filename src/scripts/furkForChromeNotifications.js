@@ -2,6 +2,12 @@
 
 var FurkForChromeNotifications = (function() {
 
+    this.actions = // function() {
+        {
+            LOGIN: 0,
+            DOWNLOAD: 1
+        };
+    //};
 
     /**
      * Convert array of strings to item objects
@@ -52,15 +58,18 @@ var FurkForChromeNotifications = (function() {
                 iconUrl: 'images/icon48.png'
             };
 
-            if (notificationMessage['dl_url'] !== undefined) {
-                options.buttons = [{ title: 'Download' }];
-                chrome.notifications.onButtonClicked.addListener(FurkForChrome.notificationHandler);
+            switch (notificationMessage['action']) {
+                case actions.LOGIN:
+                    options.buttons = [{ title: 'Login' }];
+                    chrome.notifications.onButtonClicked.addListener(FurkForChrome.loginHandler);
+                    break;
+                case actions.DOWNLOAD:
+                    options.buttons = [{ title: 'Download' }];
+                    chrome.notifications.onButtonClicked.addListener(FurkForChrome.notificationHandler);
+                    break;
             }
 
-            var notification = chrome.notifications.create(notificationMessage['file_id'], options, function() {
-            });
-
-            return notification;
+            return chrome.notifications.create(notificationMessage['file_id'], options, function() {});
         },
         buildSuccessNotification: function (apiResult) {
 
@@ -88,6 +97,7 @@ var FurkForChromeNotifications = (function() {
                 if (apiResult.files[0] !== undefined) {
                     notificationMessage['dl_url'] = apiResult.files[0].url_dl;
                     notificationMessage['file_id'] = apiResult.files[0].id;
+                    notificationMessage['action'] = actions.DOWNLOAD;
                 }
 
 
@@ -96,8 +106,9 @@ var FurkForChromeNotifications = (function() {
                 notificationMessage['title'] = 'Furk for Chrome: Error';
 
                 if (apiResult.error === "access denied") {
-                    notificationMessage['message'][1] = ". Please log in at furk.net";
+                    notificationMessage['message'][1] = "Please log in at furk.net";
                     notificationMessage['title'] = 'Furk for Chrome: Access Denied';
+                    notificationMessage['action'] = actions.LOGIN;
                 }
             }
 
@@ -109,15 +120,14 @@ var FurkForChromeNotifications = (function() {
             notificationMessage['file_id'] = '';
             notificationMessage['title'] = 'Furk for Chrome: Error';
             notificationMessage['message'] = ["Sorry, Furk returned an error."];
-            //"Status code: " + xhr.status +
-            //                      ". Please try again, or check if furk.net is up." ];
 
             var apiResponse = xhr.responseJson;
 
             switch (apiResponse.error) {
                 case "access denied":
-                    notificationMessage['message'][1] = ". Please log in at furk.net";
+                    notificationMessage['message'][1] = "Please log in at furk.net";
                     notificationMessage['title'] = 'Furk for Chrome: Access Denied';
+                    notificationMessage['action'] = actions.LOGIN;
                     break;
                 default:
                     notificationMessage['message'][1] = apiResponse.error;
