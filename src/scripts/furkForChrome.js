@@ -116,7 +116,14 @@ var FurkForChrome = (function() {
             var xhr = processResponse(e.target);
 
             if (xhr !== undefined) {
-                chrome.tts ? chrome.tts.speak("Downloading Now") : function (){};
+                
+                // Speak!
+                chrome.tts ? chrome.tts.speak("Downloading Now", {
+                    'lang': 'en-UK',
+                    'rate': 2.0
+                }) : function (){};
+
+                // Start download
                 chrome.downloads.download({
                     url: xhr.responseJson.files[0].url_dl,
                     conflictAction: 'prompt'
@@ -125,6 +132,9 @@ var FurkForChrome = (function() {
         },
         notificationHandler: function(notificationId, buttonIndex) {
             FurkAPI.getFile(notificationId, FurkForChrome.download);
+        },
+        loginHandler: function(notificationId, buttonIndex) {
+            chrome.tabs.create({ url: FurkAPI.FurkLoginUrl() });
         },
         createContextMenu: function() {
             var title = "Add to Furk";
