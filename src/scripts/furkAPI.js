@@ -20,8 +20,16 @@ var FurkAPI = (function () {
 
     // Build API REST URL
     this.apiUrl = function (endPoint) {
-        var furkApiKey = localStorage["furkForChrome_apiKey"];
-        if (!furkApiKey) {
+        var furkApiKey = undefined;
+
+        FurkForChromeStorage.Get('API_KEY', function(result, item) {
+            if (result.status === 'OK') {
+                furkApiKey = item;
+            }
+        });
+
+        if ( !furkApiKey ) {
+            console.log("No API key found in storage.")
             return "https://www.furk.net/api/" + endPoint + "?";
         } else {
             return "http://api.furk.net/api/" + endPoint + "?api_key=" + furkApiKey;
