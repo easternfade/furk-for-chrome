@@ -1,13 +1,11 @@
-﻿// Handling of browser notifications
+// Handling of browser notifications
 
 var FurkForChromeNotifications = (function() {
 
-    this.actions = // function() {
-        {
-            LOGIN: 0,
-            DOWNLOAD: 1
-        };
-    //};
+    this.actions = {
+        LOGIN: 0,
+        DOWNLOAD: 1
+    };
 
     /**
      * Convert array of strings to item objects
