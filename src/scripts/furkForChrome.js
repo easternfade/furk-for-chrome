@@ -54,17 +54,8 @@ var FurkForChrome = (function() {
             return [
                 '*://*/*.torrent',
                 '*://*/*.torrent?*',
-                'http://www.bt-chat.com/download*.php?id=*',
-                'http://www.bt-chat.com/download*.php?info_hash=*',
-                'http://www.kat.ph/torrents/*/',
-                '*://torrentz.ph/*',
-                '*://torrentz.eu/*',
-                '*://torrentz.me/*',
-                '*://torrentz.in/*',
-                'http://www.swarmthehive.com/d/*',
-                'magnet:?xt=urn:btih:*',
-                'http://publichd.eu/index.php?page=torrent-details&id=*',
-                'http://forums.mvgroup.org/tracker/get.php?id=*'
+                '*://torrentz2.eu/*',
+                'magnet:?xt=urn:btih:*'
             ];
         },
         downloadUrlFilters: function() {
