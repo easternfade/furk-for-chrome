@@ -32,14 +32,28 @@ var FurkForChromeOptions = (function () {
                     }
                 }
             });
+
+            FurkForChromeStorage.Get('TTS_ENABLE', function(result, item) {
+                if (result.status === 'OK') {
+                    var checkBox = document.getElementById("furkForChrome_ttsEnable");
+                    if (checkBox) {
+                        checkBox.checked = item;
+                    }
+                }
+            });
         },
         // Saves options to storage
         saveOptions: function () {
             var apiKey = document.getElementById("furkForChrome_apiKey").value;
-            
             if (apiKey) {
                 var keyName = FurkForChromeStorage.storageKeys.API_KEY;
                 chrome.storage.sync.set({ keyName: apiKey }, function() {});
+            }
+
+            var ttsEnable = document.getElementById("furkForChrome_ttsEnable").value;
+            if (ttsEnable) {
+                var keyName = FurkForChromeStorage.storageKeys.TTS_ENABLE;
+                chrome.storage.sync.set({ keyName: ttsEnable }, function() {});
             }
         },
         // Attempts to scrape the API key from Furk
