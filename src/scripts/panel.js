@@ -34,6 +34,7 @@ var FurkForChromePanel = (function () {
         }
 
         var sortedFiles = [];
+        var finishedContainer = document.querySelector('#finished-list');
 
         if (apiResponse.files !== undefined && apiResponse.files.length > 0) {
             //            sortedFiles = apiResponse.files.sort(function (a, b) {
@@ -41,18 +42,24 @@ var FurkForChromePanel = (function () {
             //            });
             sortedFiles = apiResponse.files; //.reverse();
 
-            var $list = $(document.createElement("ol"));
-            $("#finished-list").append($list);
+            var list = document.createElement("ol");
+            finishedContainer.appendChild(list);
+
+            //var $list = $(document.createElement("ol"));
+
+            //$("#finished-list").append($list);
 
             for (var i = 0, furkFile; furkFile = sortedFiles[i]; i++) {
                 if (i === FurkForChromePanel.finishedDisplayNum()) {
                     break;
                 }
-                var $el = constructSearchResult(furkFile);
-                $list.append($el);
+                // var $el = constructSearchResult(furkFile);
+                var listItem = constructSearchResult(furkFile);
+                list.appendChild(listItem);
             }
         } else {
-            $("#finished-list").text("No files in your Finished list - download something!");
+
+            finishedContainer.text("No files in your Finished list - download something!");
         }
 
         //list.appendChild(make(["li", "See all ", ["a", { href: "http://furk.net/users/files/finished" }, "finished files"]]));
@@ -96,12 +103,25 @@ var FurkForChromePanel = (function () {
         // TODO: get this working, as it's nicer!
         //return make(["li", "", ["a", { onclick: "showURL('" + file.url_dl + "')" }, file.name]]);
 
-        return $("<li/>")
-                    .append($("<a/>", {
-                        "href": file.url_dl,
-                        text: file.name
-                    }));
+        var item = document.createElement("a");
+        item.href = file.url_dl;
+        item.title = "Download " + file.url_dl;
+        item.appendChild(document.createTextNode(file.name));
+
+        var listItem = document.createElement("li");
+        listItem.appendChild(item);
+
+        return listItem;
+
+
+        // return $("<li/>")
+        //             .append($("<a/>", {
+        //                 "href": file.url_dl,
+        //                 text: file.name
+        //             }));
         //"target": "_blank",
+
+        
     }
 
     this.constructActiveTorrent = function (tor) {

@@ -5,7 +5,8 @@ var FurkForChromeStorage = (function() {
 
    return {
       storageKeys: {
-         'API_KEY': 'furkForChrome_apiKey'
+         'API_KEY': 'furkForChrome_apiKey',
+         'TTS_ENABLE': 'furkForChrome_ttsEnable'
       },
       Get: function(storageKey, itemCallback) {
 

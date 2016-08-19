@@ -9,6 +9,7 @@
 * Added ability to download file directly from notification
 * Panel - show finished and active lists
 * Fixed storage of Furk API key
+* Handle magnet links
 * [dev] Improved API error handling
 * [dev] Started using event pages instead of background page; modified context menu binding for compatibility
 * [dev] Migrated from deprecated webkitNotifications to chrome.notifications API (https://developer.chrome.com/extensions/desktop_notifications.html) and
@@ -20,8 +21,7 @@
 
 TODO:
 -----
-* Handle magnet links
-* [dev] Removed jQuery dependency - now using underscore for common library functions
+* Fix enable TTS setting in options
 * Fixed auto-load of Furk API key in Options (Code by PAEz: https://github.com/PAEz)
 
 ===========================================================
