@@ -55,7 +55,8 @@ var FurkForChrome = (function() {
                 '*://*/*.torrent',
                 '*://*/*.torrent?*',
                 '*://torrentz2.eu/*',
-                'magnet:?xt=urn:btih:*'
+                'magnet:*',
+                //'<all_urls>' // for testing
             ];
         },
         downloadUrlFilters: function() {
