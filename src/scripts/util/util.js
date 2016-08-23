@@ -1,9 +1,18 @@
-﻿function showURL(url) {
+﻿function isArray(a) {
+    return Object.prototype.toString.call(a) === "[object Array]";
+}
+
+function toObject(arr) {
+    var rv = {};
+    for (var i = 0; i < arr.length; ++i)
+        rv[i] = arr[i];
+    return rv;
+}
+
+function showURL(url) {
     window.open(url);
     window.event.stopPropagation();
 }
-
-
 
 function make(desc) {
     if (!isArray(desc)) {
