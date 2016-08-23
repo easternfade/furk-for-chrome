@@ -54,5 +54,7 @@ img
 }
 
 label[title^="Help:"] {
-    background: url('images/icon19.png');
+    background: url('../images/icon19.png') no-repeat;
+    height: 19px;
+    padding: 0 0 0 25px;
 }

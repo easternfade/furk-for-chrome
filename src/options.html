@@ -19,7 +19,7 @@
         <div id="content">
             <section id="furk-account">
                 <h2>My Furk Account</h2>
-                <label title="Help: If this is specified, you do not need to be logged in to Furk to use this extension.">Furk API key:</label>
+                <label title="Help: If this is specified, you do not need to be logged in to Furk to use this extension." for="furkForChrome_apiKey">Furk API key:</label>
                 <input type="text" maxlength="64" id="furkForChrome_apiKey" size="64" />
                 <p>
                     To retrieve your API key, <a href="https://www.furk.net/login" target="_blank">login to Furk</a> and find it <a href="https://www.furk.net/t/api" target="_blank">here</a> or <a id="a_findApiKey" href="#">click to autoload</a>.
@@ -28,7 +28,7 @@
             </section>
             <section id="extension-settings">
                 <h2>Extension Settings</h2>
-                <label title="">Enable Speech:</label>
+                <label title="Enable Speech" for="furkForChrome_ttsEnable">Enable Speech:</label>
                 <input type="checkbox" id="furkForChrome_ttsEnable" />
             </section>
         </div>
@@ -39,9 +39,7 @@
             </nav>
         </div>
     </div>
-    <script src="scripts/furkForChromeStorage.js" type="text/javascript"></script>
-    <script src="scripts/FurkAPI.js" type="text/javascript"></script>
-    <script src="scripts/options.js" type="text/javascript"></script>
+    <script src="bower_components/requirejs/require.js" data-main="options" type="text/javascript"></script>
 </body>
 
 </html>
