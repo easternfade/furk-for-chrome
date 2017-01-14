@@ -1,15 +1,15 @@
 Furk for Chrome Roadmap
 ----------------------------
 
-1.5
+1.5.1
 * Fix Panel to work with sync storage
 * Auto-load Furk API key
+* [dev] Load modules using require() and remove the need for background page references
 
 1.6+:
 * Intercept torrent file downloads and send them to Furk
 * Option to auto-download finished files
-* UI cleanup - make use of a framework, e.g. React
-* [dev] Load modules using require() and remove the need for background page references
+* UI cleanup - make use of a framework, e.g. React, Aurelia
 * [dev] explore event pages
 * [dev] Remove jQuery dependency from UI (for panel load speed)
 * Further notification improvements

@@ -92,7 +92,7 @@ var FurkForChromeNotifications = (function() {
                         break;
                 }
 
-                if (apiResult.files[0] !== undefined) {
+                if (apiResult.files !== undefined && apiResult.files.length > 0) {
                     notificationMessage['dl_url'] = apiResult.files[0].url_dl;
                     notificationMessage['file_id'] = apiResult.files[0].id;
                     notificationMessage['action'] = actions.DOWNLOAD;
