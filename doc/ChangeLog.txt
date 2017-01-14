@@ -1,4 +1,9 @@
 ===========================================================
+1.5.1
+
+* Fixed bug where notifications for files being downloaded was not shown
+
+===========================================================
 1.5.0
 * Improved readability of notification message for legacy and new Chrome notifications
 * URL changes
@@ -18,11 +23,6 @@
    - Saved API key now synced to all your Chrome browsers
    - Abstracted storage into its own class
 * [fun] Added synthesized speech to Download action
-
-TODO:
------
-* Fix enable TTS setting in options
-* Fixed auto-load of Furk API key in Options (Code by PAEz: https://github.com/PAEz)
 
 ===========================================================
 1.4
