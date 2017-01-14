@@ -3,41 +3,54 @@
 
 <head>
     <title>Furk for Chrome&trade; Options</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,300,600" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" type="text/css" href="css/vendor/skeleton/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="css/vendor/skeleton/skeleton.css" />
     <link rel="stylesheet" type="text/css" href="css/common.css" />
     <link rel="stylesheet" type="text/css" href="css/options.css" />
-    <link href='fonts/PontanoSans-Regular.ttf' rel='stylesheet' type='text/css' />
+    <!--<link href='fonts/PontanoSans-Regular.ttf' rel='stylesheet' type='text/css' />-->
 </head>
 
 <body id="options_body">
-    <div id="options" class="vignette">
-        <nav id="menu">
-        </nav>
-        <div id="header">
-            <img src="images/icon48.png" />
-            <h1 id="ext_name">Furk for Chrome&trade;</h1>
+    <div id="options" class="container">
+        <div class="row">
+            <div id="header" class="twelve columns">
+                <img src="images/icon48.png" />
+                <h1 id="ext_name">Furk for Chrome&trade;</h1>
+            </div>
         </div>
-        <div id="content">
-            <section id="furk-account">
-                <h2>My Furk Account</h2>
-                <label title="Help: If this is specified, you do not need to be logged in to Furk to use this extension." for="furkForChrome_apiKey">Furk API key:</label>
-                <input type="text" maxlength="64" id="furkForChrome_apiKey" size="64" />
-                <p>
-                    To retrieve your API key, <a href="https://www.furk.net/login" target="_blank">login to Furk</a> and find it <a href="https://www.furk.net/t/api" target="_blank">here</a> or <a id="a_findApiKey" href="#">click to autoload</a>.
-                </p>
-                <p class="note">Note: don't save your API key here if you are using a shared PC. It is not encrypted on disk (yet.)</p>
-            </section>
-            <section id="extension-settings">
-                <h2>Extension Settings</h2>
-                <label title="Enable Speech" for="furkForChrome_ttsEnable">Enable Speech:</label>
-                <input type="checkbox" id="furkForChrome_ttsEnable" />
-            </section>
+        <div id="content" class="row">
+            <div id="settings" class="row">
+                <div class="eight columns">
+                    <section id="furk-account">
+                        <h2>My Furk Account</h2>
+                        <label title="Help: If this is specified, you do not need to be logged in to Furk to use this extension." for="furkForChrome_apiKey">
+                            Furk API key</label>
+                        <input type="text" maxlength="64" id="furkForChrome_apiKey" size="64" />
+                        <p>
+                            To retrieve your API key, <a href="https://www.furk.net/login" target="_blank">login to Furk</a>                            and find it <a href="https://www.furk.net/t/api" target="_blank">here</a> or <a id="a_findApiKey"
+                                href="#">click to autoload</a>.
+                        </p>
+                        <p class="note">Note: don't save your API key here if you are using a shared PC. It is not encrypted on disk (yet.)</p>
+                    </section>
+                </div>
+                <div class="four columns">
+                    <section id="extension-settings">
+                        <h2>Extension Settings</h2>
+                        <label title="Enable Speech" for="furkForChrome_ttsEnable">Enable Speech:</label>
+                        <input type="checkbox" id="furkForChrome_ttsEnable" />
+                    </section>
+                </div>
+            </div>
+            <div id="footer" class="row">
+                <nav id="controls" class="twelve columns">
+                    <button id="btn_save" class="button-primary">Save</button>
+                    <button id="btn_close">Close</button>
+                </nav>
+            </div>
         </div>
-        <div id="footer">
-            <nav id="controls">
-                <button id="btn_save">Save</button>
-                <button id="btn_close">Close</button>
-            </nav>
-        </div>
+
     </div>
     <script src="bower_components/requirejs/require.js" data-main="scripts/options" type="text/javascript"></script>
 </body>
