@@ -1,7 +1,8 @@
 /* global chrome */
 // Extension storage access
 
-var FurkForChromeStorage = (function() {
+// var FurkForChromeStorage = (function() {
+define(function () {
 
    return {
       storageKeys: {
@@ -10,20 +11,20 @@ var FurkForChromeStorage = (function() {
       },
       Get: function(storageKey, itemCallback) {
 
-         if ( ! FurkForChromeStorage.storageKeys[storageKey] ) {
+         if ( ! this.storageKeys[storageKey] ) {
             console.log("Storage key " + storageKey + " is not a valid key name.");
             itemCallback( {status: 'Error' }, undefined);
             return;
          }
 
-         chrome.storage.sync.get(FurkForChromeStorage.storageKeys[storageKey], function(items) {
-            if (items[FurkForChromeStorage.storageKeys[storageKey]]) {
-               itemCallback( {status: 'OK' }, items[FurkForChromeStorage.storageKeys[storageKey]]);
+         chrome.storage.sync.get(this.storageKeys[storageKey], function(items) {
+            if (items[this.storageKeys[storageKey]]) {
+               itemCallback( {status: 'OK' }, items[this.storageKeys[storageKey]]);
             } else {
                itemCallback( {status: 'Error' }, undefined);
             }
          });
       }
    };
-
-}());
+});
+// }());

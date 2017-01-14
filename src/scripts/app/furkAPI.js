@@ -1,7 +1,8 @@
 ﻿/*
  *
  */
-var FurkAPI = (function () {
+// var FurkAPI = (function () {
+define(["app/furkForChromeStorage"], function(storage) {
 
     /// Privileged methods
     // Create, configure, and send XMLHttpRequest
@@ -83,7 +84,7 @@ var FurkAPI = (function () {
             // Do nothing if both required values are undefined
             if (link.hash === undefined && link.url === undefined) return null;
             
-            FurkForChromeStorage.Get("API_KEY", function(result, key) {
+            storage.Get("API_KEY", function(result, key) {
 
                 var apiCall = apiUrl("dl/add", key !== undefined);
                 
@@ -163,4 +164,5 @@ var FurkAPI = (function () {
 
         }
     };
-} ());
+});
+// } ());

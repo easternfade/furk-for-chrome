@@ -1,8 +1,7 @@
 //Load common code that includes config, then load the app logic for this page.
 requirejs(['./common'], function (common) {
-    requirejs([
-        'app/furkForChromeStorage',
-        'app/FurkAPI',
-        'app/furkForChromeOptions'
-        ]);
+    requirejs(['app/furkForChromeOptions'],
+        function(options) {
+            options.init();
+        });
 });

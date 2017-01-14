@@ -6,10 +6,10 @@
 //except for 'app' ones, which are in a sibling
 //directory.
 requirejs.config({
-    baseUrl: '../../scripts/',
+    baseUrl: 'scripts',
     paths: {
-        alertify: '../bower_components/alertify/',
-        app: 'app/',
-        util: 'util/'
+        //alertify: '../bower_components/alertify/',
+        app: './app/',
+        //util: './util/'
     }
 });
