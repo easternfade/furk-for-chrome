@@ -1,4 +1,6 @@
-﻿function isArray(a) {
+﻿define([], function() {
+
+function isArray(a) {
     return Object.prototype.toString.call(a) === "[object Array]";
 }
 
@@ -43,3 +45,5 @@ function make(desc) {
 
     return el;
 }
+
+});

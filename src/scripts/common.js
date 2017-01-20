@@ -11,6 +11,7 @@ requirejs.config({
         //alertify: '../bower_components/alertify/',
         app: './app/',
         util: './util/',
-        underscore: '../bower_components/underscore/'
+        underscore: '../bower_components/underscore/',
+        zepto: '../bower_components/zepto/'
     }
 });
