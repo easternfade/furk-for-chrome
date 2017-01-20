@@ -1,6 +1,7 @@
 // Handling of browser notifications
 
-var FurkForChromeNotifications = (function() {
+// var FurkForChromeNotifications = (function() {
+define(['app/furkForChrome'], function (furkForChrome) {
 
     this.actions = {
         LOGIN: 0,
@@ -37,7 +38,7 @@ var FurkForChromeNotifications = (function() {
 
             setTimeout(function() {
                 notification.cancel();
-            }, FurkForChrome.notificationTimeOut());
+            }, furkForChrome.notificationTimeOut());
 
             notification.show();
 
@@ -46,6 +47,8 @@ var FurkForChromeNotifications = (function() {
 
         // Chrome 26+: For Windows, ChromeOS
         createNotification: function(notificationMessage) {
+            var furkForChrome = require("app/furkForChrome");
+
             var options = {
                 type: "list",
                 title: notificationMessage['title'],
@@ -59,11 +62,11 @@ var FurkForChromeNotifications = (function() {
             switch (notificationMessage['action']) {
                 case actions.LOGIN:
                     options.buttons = [{ title: 'Login' }];
-                    chrome.notifications.onButtonClicked.addListener(FurkForChrome.loginHandler);
+                    chrome.notifications.onButtonClicked.addListener(furkForChrome.loginHandler);
                     break;
                 case actions.DOWNLOAD:
                     options.buttons = [{ title: 'Download' }];
-                    chrome.notifications.onButtonClicked.addListener(FurkForChrome.notificationHandler);
+                    chrome.notifications.onButtonClicked.addListener(furkForChrome.notificationHandler);
                     break;
             }
 
@@ -135,5 +138,5 @@ var FurkForChromeNotifications = (function() {
             return notificationMessage;
         }
     }
-
-}());
+});
+// }());

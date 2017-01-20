@@ -60,3 +60,7 @@ sftp-config.json
 
 # misc
 todo.txt
+
+# Bower
+
+bower_components/

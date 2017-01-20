@@ -1,7 +1,7 @@
 Furk for Chrome Roadmap
 ----------------------------
 
-1.5.1
+1.5.2
 * Fix Panel to work with sync storage
 * Auto-load Furk API key
 * [dev] Load modules using require() and remove the need for background page references
