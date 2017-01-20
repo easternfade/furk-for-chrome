@@ -3,7 +3,10 @@
 */
 
 // var FurkForChromePanel = (function () {
-define(["app/furkAPI"], function (furkAPI) {
+define(["util/util",
+        "zepto/zepto.min",
+        "app/furkAPI"], 
+        function (util, $, furkAPI) {
 
     /// Private methods
     function showFinishedList(xhr) {
@@ -19,11 +22,11 @@ define(["app/furkAPI"], function (furkAPI) {
         switch (apiResponse.error) {
             case "access denied":
                 //$("#finished-list").append("<p>Please <a href=\"https://www.furk.net/login\">log in</a> to Furk.</p>");
-                $("#finished-list").append(make(["p", "Please ",
+                $("#finished-list").append(util.make(["p", "Please ",
                     ["a",
                         {
                             href: "#",
-                            onclick: "showURL('" + FurkAPI.FurkLoginUrl + "')"
+                            onclick: "util.showURL('" + FurkAPI.FurkLoginUrl + "')"
                         },
                         "log in"], " to Furk."]));
                 //                $("#finished-list").append("<p>", 
@@ -52,7 +55,7 @@ define(["app/furkAPI"], function (furkAPI) {
             //$("#finished-list").append($list);
 
             for (var i = 0, furkFile; furkFile = sortedFiles[i]; i++) {
-                if (i === this.finishedDisplayNum()) {
+                if (i === module.finishedDisplayNum()) {
                     break;
                 }
                 // var $el = constructSearchResult(furkFile);
@@ -140,7 +143,7 @@ define(["app/furkAPI"], function (furkAPI) {
         //            })]);
 
         //return make(["li", "", tor.name, " - ", tor.have, " %", " - ", tor.active_status]);
-        return make(["li", ["span", { "class": "tor_name" }, tor.name, " - ", tor.have, " %", " - ", tor.active_status]]);
+        return util.make(["li", ["span", { "class": "tor_name" }, tor.name, " - ", tor.have, " %", " - ", tor.active_status]]);
     }
 
     /// Sort files by ID descending
@@ -150,12 +153,12 @@ define(["app/furkAPI"], function (furkAPI) {
     //    return 0;
     //}
 
-    return {
+    var module = {
         finishedDisplayNum: function () {
             return 10;
         },
         showFinished: function () {
-            this.show();
+            module.show();
 
             $("#finished-list").empty();
             furkAPI.getFinished(null, null, showFinishedList, 10, 'ctime', 'desc');
@@ -164,7 +167,7 @@ define(["app/furkAPI"], function (furkAPI) {
             $("#finished").show();
         },
         showActive: function () {
-            this.show();
+            module.show();
 
             $("#active-list").empty();
             furkAPI.getDownloads(null, showActiveList);
@@ -199,6 +202,8 @@ define(["app/furkAPI"], function (furkAPI) {
             this.showFinished();
         }
     };
+
+    return module;
 });
 // } ());
 

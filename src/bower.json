@@ -21,6 +21,8 @@
   ],
   "dependencies": {
     "alertify": "~0.3.10",
-    "requirejs": "~2.2.0"
+    "requirejs": "~2.2.0",
+    "zepto": "^1.2.0",
+    "underscore": "^1.8.3"
   }
 }
