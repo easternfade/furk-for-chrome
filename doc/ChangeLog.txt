@@ -2,6 +2,9 @@
 1.5.2
 
 * Show plugin version in options page
+* [dev] Load JS scripts using require() and remove the need for background page references
+* [dev] Options page cleanup
+* [dev] Remove jQuery dependency from UI (for panel load speed)
 
 ===========================================================
 1.5.1

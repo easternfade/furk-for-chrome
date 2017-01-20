@@ -46,10 +46,9 @@ define(['underscore/underscore-min',
                 return chrome.notifications ? notifications.createNotification(notificationMessage) : notifications.createNotificationLegacy(notificationMessage);;
             },
 
-            handleDownload: function (details) {
+            handleDownload: function (downloadItem, suggest) {
 
             },
-
 
             notificationTimeOut: function (seconds) {
 
@@ -154,8 +153,9 @@ define(['underscore/underscore-min',
                 });
             },
             attachDownloadHandler: function () {
+                chrome.downloads.onDeterminingFilename.addListener(module.handleDownload);
                 // chrome.downloads.onCreated.addListener(handleDownload);
-                chrome.webNavigation.onBeforeNavigate.addListener(module.handleDownload);
+                // chrome.webNavigation.onBeforeNavigate.addListener(module.handleDownload);
                 //    , {
                 //    url: [
                 //        { schemes: ['magnet'] }

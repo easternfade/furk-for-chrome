@@ -4,15 +4,13 @@ Furk for Chrome Roadmap
 1.5.2
 * Fix Panel to work with sync storage
 * Auto-load Furk API key
-* [dev] Load modules using require() and remove the need for background page references
 
 1.6+:
 * Intercept torrent file downloads and send them to Furk
-* Option to auto-download finished files
-* UI cleanup - make use of a framework, e.g. React, Aurelia
+	+ If file is finished, initiate download (optional - based on settings)
+* Determine how to catch clicks on magnet links send to Furk (and initiate download as above)
+* [dev] UI cleanup - make use of a framework, e.g. React, Aurelia
 * [dev] explore event pages
-* [dev] Remove jQuery dependency from UI (for panel load speed)
-* Further notification improvements
 * Detect base32 torrent hashes
 * For sites that embed torrent URLs in HTML pages, parse the page and extract the proper torrent URL; similarly handle re.zoink.it
 	+ Might implement this as a page action
