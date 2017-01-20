@@ -2,7 +2,8 @@
 * Browser action panel
 */
 
-var FurkForChromePanel = (function () {
+// var FurkForChromePanel = (function () {
+define(["app/furkAPI"], function (furkAPI) {
 
     /// Private methods
     function showFinishedList(xhr) {
@@ -18,11 +19,12 @@ var FurkForChromePanel = (function () {
         switch (apiResponse.error) {
             case "access denied":
                 //$("#finished-list").append("<p>Please <a href=\"https://www.furk.net/login\">log in</a> to Furk.</p>");
-                $("#finished-list").append(make(["p", "Please ", 
-                    ["a", 
-                        {   href: "#" ,
-                            onclick: "showURL('" + FurkAPI.FurkLoginUrl + "')" 
-                        }, 
+                $("#finished-list").append(make(["p", "Please ",
+                    ["a",
+                        {
+                            href: "#",
+                            onclick: "showURL('" + FurkAPI.FurkLoginUrl + "')"
+                        },
                         "log in"], " to Furk."]));
                 //                $("#finished-list").append("<p>", 
                 //                    "Please ",
@@ -50,7 +52,7 @@ var FurkForChromePanel = (function () {
             //$("#finished-list").append($list);
 
             for (var i = 0, furkFile; furkFile = sortedFiles[i]; i++) {
-                if (i === FurkForChromePanel.finishedDisplayNum()) {
+                if (i === this.finishedDisplayNum()) {
                     break;
                 }
                 // var $el = constructSearchResult(furkFile);
@@ -121,7 +123,7 @@ var FurkForChromePanel = (function () {
         //             }));
         //"target": "_blank",
 
-        
+
     }
 
     this.constructActiveTorrent = function (tor) {
@@ -153,19 +155,19 @@ var FurkForChromePanel = (function () {
             return 10;
         },
         showFinished: function () {
-            FurkForChromePanel.show();
+            this.show();
 
             $("#finished-list").empty();
-            FurkAPI.getFinished(null, null, showFinishedList, 10, 'ctime', 'desc');
+            furkAPI.getFinished(null, null, showFinishedList, 10, 'ctime', 'desc');
 
             $("#active").hide();
             $("#finished").show();
         },
         showActive: function () {
-            FurkForChromePanel.show();
+            this.show();
 
             $("#active-list").empty();
-            FurkAPI.getDownloads(null, showActiveList);
+            furkAPI.getDownloads(null, showActiveList);
 
             $("#active").show();
             $("#finished").hide();
@@ -189,20 +191,21 @@ var FurkForChromePanel = (function () {
             //Array.prototype.slice.call(document.querySelectorAll('.showMenu'), 0).forEach(function () {
             //    this.addEventListener('click', FurkForChromePanel.show);
             //});
-            document.querySelector('#showActive').addEventListener('click', FurkForChromePanel.showActive);
-            document.querySelector('#showFinished').addEventListener('click', FurkForChromePanel.showFinished);
+            document.querySelector('#showActive').addEventListener('click', this.showActive);
+            document.querySelector('#showFinished').addEventListener('click', this.showFinished);
 
             // show default view
             // TODO: make this an option
-            FurkForChromePanel.showFinished();
+            this.showFinished();
         }
     };
-} ());
+});
+// } ());
 
 //$(document).ready(function panelHtml() {
 //    FurkForChromePanel.show();
 //});
 
-window.addEventListener('DOMContentLoaded', function () {
-    FurkForChromePanel.init();
-});
+// window.addEventListener('DOMContentLoaded', function () {
+//     FurkForChromePanel.init();
+// });

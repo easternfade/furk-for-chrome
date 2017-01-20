@@ -1,4 +1,9 @@
 ===========================================================
+1.5.2
+
+* Show plugin version in options page
+
+===========================================================
 1.5.1
 
 * Fixed bug where notifications for files being downloaded was not shown

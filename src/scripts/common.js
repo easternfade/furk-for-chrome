@@ -10,6 +10,7 @@ requirejs.config({
     paths: {
         //alertify: '../bower_components/alertify/',
         app: './app/',
-        //util: './util/'
+        util: './util/',
+        underscore: '../bower_components/underscore/'
     }
 });
