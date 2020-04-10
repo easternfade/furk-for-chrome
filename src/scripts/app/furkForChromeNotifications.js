@@ -1,7 +1,8 @@
 // Handling of browser notifications
 
-// var FurkForChromeNotifications = (function() {
-define(['app/furkForChrome'], function (furkForChrome) {
+import constants from "./constants";
+
+export default function() {
 
     this.actions = {
         LOGIN: 0,
@@ -29,6 +30,8 @@ define(['app/furkForChrome'], function (furkForChrome) {
         // Webkit notifications
         createNotificationLegacy: function(notificationMessage)
         {
+            if (!webkitNotifications) return;
+            
             var notification = webkitNotifications.createNotification(
                 'images/icon48.png',
                 notificationMessage['title'],
@@ -38,7 +41,7 @@ define(['app/furkForChrome'], function (furkForChrome) {
 
             setTimeout(function() {
                 notification.cancel();
-            }, furkForChrome.notificationTimeOut());
+            }, constants.NotificationTimeout);
 
             notification.show();
 
@@ -46,9 +49,7 @@ define(['app/furkForChrome'], function (furkForChrome) {
         },
 
         // Chrome 26+: For Windows, ChromeOS
-        createNotification: function(notificationMessage) {
-            var furkForChrome = require("app/furkForChrome");
-
+        createNotification: function(notificationMessage, handlerModule) {
             var options = {
                 type: "list",
                 title: notificationMessage['title'],
@@ -60,13 +61,13 @@ define(['app/furkForChrome'], function (furkForChrome) {
             };
 
             switch (notificationMessage['action']) {
-                case actions.LOGIN:
+                case this.actions.LOGIN:
                     options.buttons = [{ title: 'Login' }];
-                    chrome.notifications.onButtonClicked.addListener(furkForChrome.loginHandler);
+                    chrome.notifications.onButtonClicked.addListener(handlerModule.loginHandler);
                     break;
-                case actions.DOWNLOAD:
+                case this.actions.DOWNLOAD:
                     options.buttons = [{ title: 'Download' }];
-                    chrome.notifications.onButtonClicked.addListener(furkForChrome.notificationHandler);
+                    chrome.notifications.onButtonClicked.addListener(handlerModule.notificationHandler);
                     break;
             }
 
@@ -98,7 +99,7 @@ define(['app/furkForChrome'], function (furkForChrome) {
                 if (apiResult.files !== undefined && apiResult.files.length > 0) {
                     notificationMessage['dl_url'] = apiResult.files[0].url_dl;
                     notificationMessage['file_id'] = apiResult.files[0].id;
-                    notificationMessage['action'] = actions.DOWNLOAD;
+                    notificationMessage['action'] = this.actions.DOWNLOAD;
                 }
 
 
@@ -109,7 +110,7 @@ define(['app/furkForChrome'], function (furkForChrome) {
                 if (apiResult.error === "access denied") {
                     notificationMessage['message'][1] = "Please log in at furk.net";
                     notificationMessage['title'] = 'Furk for Chrome: Access Denied';
-                    notificationMessage['action'] = actions.LOGIN;
+                    notificationMessage['action'] = this.actions.LOGIN;
                 }
             }
 
@@ -128,7 +129,7 @@ define(['app/furkForChrome'], function (furkForChrome) {
                 case "access denied":
                     notificationMessage['message'][1] = "Please log in at furk.net";
                     notificationMessage['title'] = 'Furk for Chrome: Access Denied';
-                    notificationMessage['action'] = actions.LOGIN;
+                    notificationMessage['action'] = this.actions.LOGIN;
                     break;
                 default:
                     notificationMessage['message'][1] = apiResponse.error;
@@ -138,5 +139,4 @@ define(['app/furkForChrome'], function (furkForChrome) {
             return notificationMessage;
         }
     }
-});
-// }());
+};

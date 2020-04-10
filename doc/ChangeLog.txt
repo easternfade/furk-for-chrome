@@ -5,6 +5,10 @@
 * [dev] Load JS scripts using require() and remove the need for background page references
 * [dev] Options page cleanup
 * [dev] Remove jQuery dependency from UI (for panel load speed)
+* [dev] Remove Visual Studio solution/project files
+* [dev] Replace bower with npm
+* [dev] Add webpack
+
 
 ===========================================================
 1.5.1

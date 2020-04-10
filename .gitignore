@@ -61,6 +61,10 @@ sftp-config.json
 # misc
 todo.txt
 
-# Bower
+# npm 
 
-bower_components/
+node_modules/
+
+# webpack
+
+dist/

@@ -1,0 +1,42 @@
+{
+  "name": "furk-for-chrome",
+  "version": "1.5.2",
+  "homepage": "https://github.com/easternfade/furk-for-chrome",
+  "authors": [
+    "easternfade@protonmail.com"
+  ],
+  "description": "furk.net / zzlbox.com cloud storage service productivity extension for the Google Chrome™ web browser.",
+  "main": "src/scripts/background.js",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "alertify": "^0.3.0",
+    "requirejs": "~2.2.0",
+    "underscore": "^1.8.3",
+    "zepto": "^1.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-private-methods": "^7.8.3",
+    "@babel/preset-env": "^7.9.5",
+    "babel-loader": "^8.1.0",
+    "copy-webpack-plugin": "^5.1.1",
+    "eslint": "^6.8.0",
+    "webpack": "^4.42.1",
+    "webpack-cli": "^3.3.11"
+  },
+  "scripts": {
+    "webpack": "NODE_ENV=development webpack --mode=development",
+    "dev": "NODE_ENV=development webpack --mode=development --watch",
+    "prod": "NODE_ENV=production webpack --mode=production",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

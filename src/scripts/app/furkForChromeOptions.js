@@ -1,7 +1,7 @@
-﻿//'use strict';
+﻿import furkAPI from "./furkAPI";
+import storage from "./furkForChromeStorage";
 
-define(["app/furkForChromeStorage", "app/furkAPI"], function (storage, furkAPI) {
-//define(['require', 'app/furkForChromeStorage'], function(require) {
+export default function() {
 
     this.extractApiKey = function (textBoxTarget) {
         var xhr = new XMLHttpRequest();
@@ -74,7 +74,7 @@ define(["app/furkForChromeStorage", "app/furkAPI"], function (storage, furkAPI) 
             var textBox = document.getElementById('furkForChrome_apiKey');
 
             if (textBox) {
-                extractApiKey(textBox);
+                this.extractApiKey(textBox);
             }
 
         },
@@ -113,12 +113,4 @@ define(["app/furkForChromeStorage", "app/furkAPI"], function (storage, furkAPI) 
             }
         }
     };
-});
-
-// var FurkForChromeOptions = (function () {
-
-// }());
-
-// window.addEventListener('DOMContentLoaded', function () {
-//     FurkForChromeOptions.init();
-// });
+}

@@ -1,4 +1,4 @@
-var base32converter = (function () {
+export default function base32converter () {
 
     // Base32 conversion based on http://www.ietf.org/rfc/rfc3548.txt, http://www.bittorrent.org/beps/bep_0009.html
     // Base32 Alphabet
@@ -63,4 +63,4 @@ var base32converter = (function () {
         }
     }
 
-}());
+}
