@@ -1,3 +1,3 @@
-import furkForChrome from "./app/furkForChrome";
+import { FurkForChrome } from "./app/furkForChrome";
 
-furkForChrome.init();
+FurkForChrome.init();
