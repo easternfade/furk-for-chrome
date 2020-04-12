@@ -1,7 +1,3 @@
-//Load common code that includes config, then load the app logic for this page.
-requirejs(['./common'], function (common) {
-    requirejs(['app/furkForChromeOptions'],
-        function(options) {
-            options.init();
-        });
-});
+import FurkForChromeOptions from "./app/furkForChromeOptions";
+
+FurkForChromeOptions.init();

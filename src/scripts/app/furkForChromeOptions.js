@@ -1,116 +1,128 @@
-﻿import furkAPI from "./furkAPI";
-import storage from "./furkForChromeStorage";
+﻿/**
+ * Manage extension options
+ *
+ * ES2019
+ */
 
-export default function() {
+import FurkAPI from "./furkAPI";
+import FurkForChromeStorage from "./furkForChromeStorage";
 
-    this.extractApiKey = function (textBoxTarget) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", furkAPI.FurkApiPage(), true);
-        xhr.onreadystatechange = function () {
-            if (xhr.readyState == 4) {
-                if (xhr.responseText !== "") {
-                    var re = /<li>api_key.+?Your API key is:.*?([0-9a-f]+).*?<\/li>/gm;
-                    var matches = re.exec(xhr.responseText);
-                    if (matches) {
-                        textBoxTarget.innerText = matches[1];
-                    }
-                }
-            }
-        };
-        xhr.send();
-    };
+export default class FurkForChromeOptions {
+	static extractApiKey(textBoxTarget) {
+		var xhr = new XMLHttpRequest();
+		xhr.open("GET", FurkAPI.FurkApiPage, true);
+		xhr.onreadystatechange = function () {
+			if (xhr.readyState == 4) {
+				if (xhr.responseText !== "") {
+					var re = /<li>api_key.+?Your API key is:.*?([0-9a-f]+).*?<\/li>/gm;
+					var matches = re.exec(xhr.responseText);
+					if (matches) {
+						textBoxTarget.innerText = matches[1];
+					}
+				}
+			}
+		};
+		xhr.send();
+	}
 
-    /// Public methods
-    return {
-        // Restores select box state to saved value from localStorage.
-        restoreOptions: function () {
-            //chrome.storage.sync.get(FurkForChromeStorage.storageKeys.API_KEY, function(items) {
-            storage.Get('API_KEY', function (result, item) {
-                if (result.status === 'OK') {
-                    var textBox = document.getElementById("furkForChrome_apiKey");
-                    if (textBox) { // && items[FurkForChromeStorage.storageKeys.API_KEY]) {
-                        textBox.value = item;
-                    }
-                }
-            });
+	// Restores select box state to saved value from localStorage.
+	static restoreOptions() {
+		//chrome.storage.sync.get(FurkForChromeStorage.storageKeys.API_KEY, function(items) {
+		FurkForChromeStorage.Get("API_KEY", function (result, item) {
+			if (result.status === "OK") {
+				console.log(
+					"Loaded " + FurkForChromeStorage.storageKeys.API_KEY
+				);
+				var textBox = document.getElementById("furkForChrome_apiKey");
+				if (textBox) {
+					// && items[FurkForChromeStorage.storageKeys.API_KEY]) {
+					textBox.value = item;
+				}
+			}
+		});
 
-            storage.Get('TTS_ENABLE', function (result, item) {
-                if (result.status === 'OK') {
-                    var checkBox = document.getElementById("furkForChrome_ttsEnable");
-                    if (checkBox) {
-                        checkBox.checked = item;
-                    }
-                }
-            });
-        },
-        // Saves options to storage
-        saveOptions: function () {
-            var apiKey = document.getElementById("furkForChrome_apiKey").value;
-            if (apiKey) {
-                var keyName = storage.storageKeys.API_KEY;
-                chrome.storage.sync.set({ keyName: apiKey }, function () {
+		FurkForChromeStorage.Get("TTS_ENABLE", function (result, item) {
+			if (result.status === "OK") {
+				console.log(
+					"Loaded " + FurkForChromeStorage.storageKeys.TTS_ENABLE
+				);
+				var checkBox = document.getElementById(
+					"furkForChrome_ttsEnable"
+				);
+				if (checkBox) {
+					checkBox.checked = item;
+				}
+			}
+		});
+	}
 
-                });
-            }
+	// Saves options to storage
+	static saveOptions() {
+		var apiKey = document.getElementById("furkForChrome_apiKey").value;
+		FurkForChromeStorage.Store("API_KEY", apiKey, (status) => {
+			console.log("Save action for API_KEY: " + status.status);
+		});
 
-            var ttsEnable = document.getElementById("furkForChrome_ttsEnable").value;
-            if (ttsEnable) {
-                var keyName = storage.storageKeys.TTS_ENABLE;
-                chrome.storage.sync.set({ keyName: ttsEnable }, function () { });
-            }
-        },
-        loadExtensionInfo: function () {
-            chrome.management.getSelf(function (extensionInfo) {
-                var textBox = document.getElementById('ext_name');
+		var ttsEnable = document.getElementById("furkForChrome_ttsEnable")
+			.checked;
+		FurkForChromeStorage.Store("TTS_ENABLE", ttsEnable, (status) => {
+			console.log("Save action for TTS_ENABLE: " + status.status);
+		});
+	}
 
-                if (textBox) {
-                    textBox.innerText = extensionInfo.name + ' ' + extensionInfo.version;
-                }
-            });
-        },
-        // Attempts to scrape the API key from Furk
-        findApiKey: function () {
+	static #loadExtensionInfo() {
+		chrome.management.getSelf(function (extensionInfo) {
+			var textBox = document.getElementById("ext_name");
 
-            var textBox = document.getElementById('furkForChrome_apiKey');
+			if (textBox) {
+				textBox.innerText =
+					extensionInfo.name + " " + extensionInfo.version;
+			}
+		});
+	}
 
-            if (textBox) {
-                this.extractApiKey(textBox);
-            }
+	// Attempts to scrape the API key from Furk
+	static findApiKey() {
+		var textBox = document.getElementById("furkForChrome_apiKey");
 
-        },
-        init: function () {
-            // Populate dynamic content
-            this.loadExtensionInfo();
+		if (textBox) {
+			FurkForChromeOptions.extractApiKey(textBox);
+		}
+	}
 
-            // Load options from local storage
-            this.restoreOptions();
+	static init() {
+		// Populate dynamic content
+		FurkForChromeOptions.#loadExtensionInfo();
 
-            // Bind options page event handlers
+		// Load options from local storage
+		FurkForChromeOptions.restoreOptions();
 
-            // 1. Save  then close tab on button click
-            var closeButton = document.getElementById("btn_close");
-            if (closeButton) {
-                closeButton.onclick = function () {
-                    chrome.tabs.getCurrent(function (tab) {
-                        this.saveOptions();
-                        chrome.tabs.remove(tab.id);
-                    });
-                    return false;
-                }
-            }
+		// Bind options page event handlers
 
+		// 1. Save  then close tab on button click
+		var closeButton = document.getElementById("btn_close");
+		if (closeButton) {
+			closeButton.onclick = function () {
+				chrome.tabs.getCurrent(function (tab) {
+					FurkForChromeOptions.saveOptions();
+					chrome.tabs.remove(tab.id);
+				});
+				return false;
+			};
+		}
 
-            // 2. Autoload API key
-            var findApiLink = document.getElementById("a_findApiKey");
-            if (findApiLink) {
-                findApiLink.onclick = function () { alert('Sorry, work in progress!'); }; // FurkForChromeOptions.findApiKey;
-            }
+		// 2. Autoload API key
+		var findApiLink = document.getElementById("a_findApiKey");
+		if (findApiLink) {
+			findApiLink.onclick = function () {
+				alert("Sorry, work in progress!");
+			}; // FurkForChromeOptions.findApiKey;
+		}
 
-            // 3. Manual save button
-            var saveButton = document.getElementById("btn_save");
-            if (saveButton) {
-                saveButton.onclick = this.saveOptions;
-            }
-        }
-    };
+		// 3. Manual save button
+		var saveButton = document.getElementById("btn_save");
+		if (saveButton) {
+			saveButton.onclick = FurkForChromeOptions.saveOptions;
+		}
+	}
 }

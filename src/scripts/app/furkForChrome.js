@@ -5,8 +5,8 @@
  * ES2019
  */
 
-import { FurkAPI } from "./furkAPI";
-import notifications from "./furkForChromeNotifications";
+import FurkAPI from "./furkAPI";
+import FurkForChromeNotifications from "./furkForChromeNotifications";
 import base32converter from "../util/base32";
 
 export class FurkForChrome {
@@ -49,25 +49,25 @@ export class FurkForChrome {
 
 		switch (xhr.status) {
 			case 500:
-				notificationMessage = notifications.buildErrorNotification(xhr);
+				notificationMessage = FurkForChromeNotifications.buildErrorNotification(xhr);
 				break;
 			case 200:
 				// Sometimes the API returns an error within a successful response
 				if (xhr.responseJson.status === "error") {
-					notificationMessage = notifications.buildErrorNotification(
+					notificationMessage = FurkForChromeNotifications.buildErrorNotification(
 						xhr
 					);
 					break;
 				}
-				notificationMessage = notifications.buildSuccessNotification(
+				notificationMessage = FurkForChromeNotifications.buildSuccessNotification(
 					xhr.responseJson
 				);
 				break;
 		}
 
 		return chrome.notifications
-			? notifications.createNotification(notificationMessage, FurkForChrome)
-			: notifications.createNotificationLegacy(notificationMessage);
+			? FurkForChromeNotifications.createNotification(notificationMessage, FurkForChrome)
+			: FurkForChromeNotifications.createNotificationLegacy(notificationMessage);
 	}
 
 	static #handleDownload (downloadItem, suggest) {}
@@ -174,4 +174,4 @@ export class FurkForChrome {
 		//    ]
 		//});
 	}
-};
+}

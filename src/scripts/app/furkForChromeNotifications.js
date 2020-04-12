@@ -1,142 +1,161 @@
-// Handling of browser notifications
+/**
+ * Handling of browser notifications
+ *
+ * ES2019
+ */
 
 import constants from "./constants";
+import _ from "lodash";
 
-export default function() {
+export default class FurkForChromeNotifications {
 
-    this.actions = {
-        LOGIN: 0,
-        DOWNLOAD: 1
-    };
+	static actions = {
+		LOGIN: 0,
+		DOWNLOAD: 1,
+	};
 
-    /**
-     * Convert array of strings to item objects
-     *
-     * @param array of strings
-     * @return array of item objects
-     *
-     * items: [ { title: "Item1", message: "This is item 1."},
-     *          { title: "Item2", message: "This is item 2."},
-     *          { title: "Item3", message: "This is item 3."} ]
-     */
-    this.messagesToItems = function(msgArray) {
-        var items = {};
-        for (var i = 0; i < arr.length; ++i)
-            rv[i] = arr[i];
-        return rv;
-    };
+	/**
+	 * Convert array of strings to item objects
+	 *
+	 * @param array of strings
+	 * @return array of item objects
+	 *
+	 * items: [ { title: "Item1", message: "This is item 1."},
+	 *          { title: "Item2", message: "This is item 2."},
+	 *          { title: "Item3", message: "This is item 3."} ]
+	 */
+	static #messagesToItems = function (msgArray) {
+		var items = {};
+		for (var i = 0; i < arr.length; ++i) rv[i] = arr[i];
+		return rv;
+	};
 
-    return {
-        // Webkit notifications
-        createNotificationLegacy: function(notificationMessage)
-        {
-            if (!webkitNotifications) return;
-            
-            var notification = webkitNotifications.createNotification(
-                'images/icon48.png',
-                notificationMessage['title'],
-                _.reduce(notificationMessage['message'], function(memo, val, index, list) {
-                    return memo + val + (index <= list.length ? ' - ' : '');
-                }, ''));
+	// Webkit notifications
+	static createNotificationLegacy(notificationMessage) {
+		if (!webkitNotifications) return;
 
-            setTimeout(function() {
-                notification.cancel();
-            }, constants.NotificationTimeout);
+		var notification = webkitNotifications.createNotification(
+			"images/icon48.png",
+			notificationMessage["title"],
+			_.reduce(
+				notificationMessage["message"],
+				function (memo, val, index, list) {
+					return memo + val + (index <= list.length ? " - " : "");
+				},
+				""
+			)
+		);
 
-            notification.show();
+		setTimeout(function () {
+			notification.cancel();
+		}, constants.NotificationTimeout);
 
-            return notification;
-        },
+		notification.show();
 
-        // Chrome 26+: For Windows, ChromeOS
-        createNotification: function(notificationMessage, handlerModule) {
-            var options = {
-                type: "list",
-                title: notificationMessage['title'],
-                message: notificationMessage['message'][0],
-                items: _.map(notificationMessage['message'], function(msg) {
-                    return { title: '', message: msg };
-                }), // notificationMessage['message'][0],
-                iconUrl: 'images/icon48.png'
-            };
+		return notification;
+	}
 
-            switch (notificationMessage['action']) {
-                case this.actions.LOGIN:
-                    options.buttons = [{ title: 'Login' }];
-                    chrome.notifications.onButtonClicked.addListener(handlerModule.loginHandler);
-                    break;
-                case this.actions.DOWNLOAD:
-                    options.buttons = [{ title: 'Download' }];
-                    chrome.notifications.onButtonClicked.addListener(handlerModule.notificationHandler);
-                    break;
-            }
+	// Chrome 26+: For Windows, ChromeOS
+	static createNotification(notificationMessage, handlerModule) {
+		var options = {
+			type: "basic",
+			title: notificationMessage["title"],
+            message: notificationMessage["message"][0],
+            contextMessage: _.join(_.slice(notificationMessage["message"], 1), "\n"),
+            // for list:
+			// items: _.map(notificationMessage["message"], function (msg) {
+			// 	return { title: "", message: msg };
+			// }), // notificationMessage['message'][0],
+			iconUrl: "images/icon48.png",
+		};
 
-            return chrome.notifications.create(notificationMessage['file_id'], options, function() {});
-        },
-        buildSuccessNotification: function (apiResult) {
+		switch (notificationMessage["action"]) {
+			case this.actions.LOGIN:
+				options.buttons = [{ title: "Login" }];
+				chrome.notifications.onButtonClicked.addListener(
+					handlerModule.loginHandler
+				);
+				break;
+			case this.actions.DOWNLOAD:
+				options.buttons = [{ title: "Download" }];
+				chrome.notifications.onButtonClicked.addListener(
+					handlerModule.notificationHandler
+				);
+				break;
+		}
 
-            var notificationMessage = {};
-            notificationMessage['file_id'] = '';
-            notificationMessage['message'] = ["File "];
+		return chrome.notifications.create(
+			notificationMessage["file_id"],
+			options,
+			function () {}
+		);
+	}
 
-            if (apiResult.status == "ok") {
-                notificationMessage['message'][0] += " is " + apiResult.dl.dl_status;
+	static buildSuccessNotification(apiResult) {
+		var notificationMessage = {};
+		notificationMessage["file_id"] = "";
+		notificationMessage["message"] = ["File "];
 
-                if (typeof parseInt(apiResult.dl.size) === 'number') {
-                    notificationMessage['message'][1] = "Size: " + (apiResult.dl.size / 1048576).toFixed(2) + " MB";
-                }
+		if (apiResult.status == "ok") {
+			notificationMessage["message"][0] +=
+				" is " + apiResult.dl.dl_status;
 
-                switch (apiResult.dl.dl_status) {
-                    case "finished":
-                        notificationMessage['title'] = 'Furk for Chrome: Finished';
-                        notificationMessage['message'][2] = "File name: " + apiResult.dl.name;
-                        break;
-                    default: // "active"
-                        notificationMessage['title'] = 'Furk for Chrome: Added';
-                        break;
-                }
+			if (typeof parseInt(apiResult.dl.size) === "number") {
+				notificationMessage["message"][1] =
+					"Size: " + (apiResult.dl.size / 1048576).toFixed(2) + " MB";
+			}
 
-                if (apiResult.files !== undefined && apiResult.files.length > 0) {
-                    notificationMessage['dl_url'] = apiResult.files[0].url_dl;
-                    notificationMessage['file_id'] = apiResult.files[0].id;
-                    notificationMessage['action'] = this.actions.DOWNLOAD;
-                }
+			switch (apiResult.dl.dl_status) {
+				case "finished":
+					notificationMessage["title"] = "Furk for Chrome: Finished";
+					notificationMessage["message"][2] =
+						"File name: " + apiResult.dl.name;
+					break;
+				default:
+					// "active"
+					notificationMessage["title"] = "Furk for Chrome: Added";
+					break;
+			}
 
+			if (apiResult.files !== undefined && apiResult.files.length > 0) {
+				notificationMessage["dl_url"] = apiResult.files[0].url_dl;
+				notificationMessage["file_id"] = apiResult.files[0].id;
+				notificationMessage["action"] = FurkForChromeNotifications.actions.DOWNLOAD;
+			}
+		} else {
+			notificationMessage["message"][0] +=
+				" download failed: " + apiResult.error;
+			notificationMessage["title"] = "Furk for Chrome: Error";
 
-            } else {
-                notificationMessage['message'][0] += " download failed: " + apiResult.error;
-                notificationMessage['title'] = 'Furk for Chrome: Error';
+			if (apiResult.error === "access denied") {
+				notificationMessage["message"][1] = "Please log in at furk.net";
+				notificationMessage["title"] = "Furk for Chrome: Access Denied";
+				notificationMessage["action"] = FurkForChromeNotifications.actions.LOGIN;
+			}
+		}
 
-                if (apiResult.error === "access denied") {
-                    notificationMessage['message'][1] = "Please log in at furk.net";
-                    notificationMessage['title'] = 'Furk for Chrome: Access Denied';
-                    notificationMessage['action'] = this.actions.LOGIN;
-                }
-            }
+		return notificationMessage;
+	}
 
-            return notificationMessage;
-        },
-        buildErrorNotification: function (xhr) {
+	static buildErrorNotification(xhr) {
+		var notificationMessage = {};
+		notificationMessage["file_id"] = "";
+		notificationMessage["title"] = "Furk for Chrome: Error";
+		notificationMessage["message"] = ["Sorry, Furk returned an error."];
 
-            var notificationMessage = {};
-            notificationMessage['file_id'] = '';
-            notificationMessage['title'] = 'Furk for Chrome: Error';
-            notificationMessage['message'] = ["Sorry, Furk returned an error."];
+		var apiResponse = xhr.responseJson;
 
-            var apiResponse = xhr.responseJson;
+		switch (apiResponse.error) {
+			case "access denied":
+				notificationMessage["message"][0] = "Please log in at furk.net";
+				notificationMessage["title"] = "Furk for Chrome: Access Denied";
+				notificationMessage["action"] = FurkForChromeNotifications.actions.LOGIN;
+				break;
+			default:
+				notificationMessage["message"][1] = apiResponse.error;
+				break;
+		}
 
-            switch (apiResponse.error) {
-                case "access denied":
-                    notificationMessage['message'][1] = "Please log in at furk.net";
-                    notificationMessage['title'] = 'Furk for Chrome: Access Denied';
-                    notificationMessage['action'] = this.actions.LOGIN;
-                    break;
-                default:
-                    notificationMessage['message'][1] = apiResponse.error;
-                    break;
-            }
-
-            return notificationMessage;
-        }
-    }
-};
+		return notificationMessage;
+	}
+}

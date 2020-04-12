@@ -1,14 +1,13 @@
 // Extension storage access
 
-export default {
-	storageKeys: {
+export default class FurkForChromeStorage {
+	static storageKeys = {
 		API_KEY: "furkForChrome_apiKey",
 		TTS_ENABLE: "furkForChrome_ttsEnable",
-	},
-	Get: function (storageKey, itemCallback) {
-        const self = this;
+	};
 
-		if (!self.storageKeys[storageKey]) {
+	static Get(storageKey, itemCallback) {
+		if (!FurkForChromeStorage.storageKeys[storageKey]) {
 			console.log(
 				"Storage key " + storageKey + " is not a valid key name."
 			);
@@ -16,15 +15,35 @@ export default {
 			return;
 		}
 
-		chrome.storage.sync.get(self.storageKeys[storageKey], function (items) {
-			if (items[self.storageKeys[storageKey]]) {
-				itemCallback(
-					{ status: "OK" },
-					items[self.storageKeys[storageKey]]
-				);
-			} else {
-				itemCallback({ status: "Error" }, undefined);
+		chrome.storage.sync.get(
+			FurkForChromeStorage.storageKeys[storageKey],
+			function (items) {
+				if (items[FurkForChromeStorage.storageKeys[storageKey]]) {
+					itemCallback(
+						{ status: "OK" },
+						items[FurkForChromeStorage.storageKeys[storageKey]]
+					);
+				} else {
+					itemCallback({ status: "Error" }, undefined);
+				}
 			}
-		});
-	},
-};
+		);
+	}
+
+	static Store(storageKey, value, itemCallback) {
+		if (!FurkForChromeStorage.storageKeys[storageKey]) {
+			console.log(
+				"Storage key " + storageKey + " is not a valid key name."
+			);
+			itemCallback({ status: "Error" });
+			return;
+		}
+
+		chrome.storage.sync.set({
+            [FurkForChromeStorage.storageKeys[storageKey]]: value
+        }, () => {
+                itemCallback({ status: "Saved" });
+			}
+		);
+	}
+}

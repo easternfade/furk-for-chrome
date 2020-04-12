@@ -6,7 +6,7 @@
 
 import storage from "./furkForChromeStorage";
 
-export class FurkAPI {
+export default class FurkAPI {
 	static FurkLoginUrl = "https://www.furk.net/login";
 	static FurkApiPage = "https://www.furk.net/t/api";
 
@@ -53,6 +53,7 @@ export class FurkAPI {
 
 	// Add param to API URL
 	static #appendApiParam(originalApiUrl, paramKey, paramValue) {
+        paramValue = encodeURI(paramValue);
 		if (originalApiUrl.substr(originalApiUrl.length - 1) === "?") {
 			return (originalApiUrl += paramKey + "=" + paramValue);
 		} else {
